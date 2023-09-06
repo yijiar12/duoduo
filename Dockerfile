@@ -6,8 +6,6 @@ COPY files/* /home/choreouser/
 
 ENV PM2_HOME=/tmp
 
-EXPOSE 8080
-
 CMD ["gotty", "-r", "-w", "--port", "8080", "/bin/bash"]
 
 RUN apt-get update &&\
@@ -24,5 +22,14 @@ RUN apt-get update &&\
     npm install -r package.json
 
 ENTRYPOINT [ "node", "server.js" ]
+
+# Use the base image
+FROM modenaf360/gotty:latest
+ 
+# Expose the desired port
+EXPOSE 8080
+ 
+# Start Gotty with the specified command
+CMD ["gotty", "-r", "-w", "--port", "8080", "/bin/bash"]
 
 USER 10001
